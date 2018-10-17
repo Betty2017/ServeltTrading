@@ -34,14 +34,22 @@ public class TradingController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
+		String id= request.getParameter("id");		
+		String aq=request.getParameter("amountquantity");
+		String sy= request.getParameter("symbol");		
+		String ac=request.getParameter("action");
 		
-		String id= request.getParameter("id");
+		int amountquantity = Integer.parseInt(aq);			
+					
+		HttpSession session = request.getSession();
+		request.setAttribute("aq", aq);	
 		request.setAttribute("id", id);
 		
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet rs = null;
+		double totalamount;
+		
 		String sql = "select * from execute where id='"+id+"'";
 		
 		System.out.println("test conn");
@@ -57,7 +65,7 @@ public class TradingController extends HttpServlet {
 		        stmt = con.createStatement();
 				rs = stmt.executeQuery(sql);
 				
-				 System.out.println("after conn"); 
+				
 				 
 			      System.out.println("Moving cursor to the last...");
 			      rs.last();
@@ -69,23 +77,43 @@ public class TradingController extends HttpServlet {
 			      String ticker = rs.getString("ticker");
 			      String quantity = rs.getString("quantity");
 			      String Avalablefund = rs.getString("Avalablefund");
-		          String executeprice = rs.getString("executeprice");
+			      String executeprice = rs.getString("executeprice");
 		          String executedate = rs.getString("executedate");
 			      
-			  
+		          int price = Integer.parseInt(executeprice);			
+		          double fund = Integer.parseInt(Avalablefund);
+		          int quant = Integer.parseInt(quantity);
+		          
 			      //Display values
 			   
 			      System.out.print(", First: " + username);
 			      System.out.print(", First: " + ticker);
 			      System.out.print(", First: " + quantity);
-			      System.out.print(", First: " + username);
-				 
-		       
-				
-								 
-				 
-				 
-				 
+			      System.out.print(", First: " + aq);
+			      
+			      totalamount = amountquantity * price;
+			      fund = fund - totalamount;
+			      quant = quant - amountquantity;
+			      
+			      String sqlUpdate = "UPDATE execute " + " SET quantity = '"+quant+"' , Avalablefund = '"+fund+"' where id = '"+id+"'";
+			      System.out.println(sqlUpdate);  
+					
+			      if(!stmt.execute(sqlUpdate))
+					 {
+											
+			    	  sqlUpdate= "Select * from execute";
+						stmt=con.createStatement();
+						rs=(ResultSet) stmt.executeQuery(sqlUpdate);
+						
+					
+						
+						while(rs.next()){
+							System.out.print(rs.getString(1) + "\t");
+							System.out.print(rs.getString(2));
+							System.out.println();
+						}
+											
+					} 
 			/*	
 	        while (rs.next()) {
 	        	
@@ -106,6 +134,8 @@ public class TradingController extends HttpServlet {
 	            session.setAttribute("Avalablefund_session", Avalablefund);
 	            session.setAttribute("executeprice_session", executeprice);
 	            session.setAttribute("executedate_session", executedate);
+	            session.setAttribute("fund_session", fund);
+	            session.setAttribute("quant_session", quant);
 
 	        
 	    } catch (SQLException e ) {
@@ -131,6 +161,7 @@ public class TradingController extends HttpServlet {
 	    getServletContext().getRequestDispatcher(nextURL).forward(request,response);
 	}
 }
+
 		
 		
 

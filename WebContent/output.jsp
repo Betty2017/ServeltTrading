@@ -7,13 +7,23 @@
 <title>Trading System</title>
 </head>
 <body>
+		<p> Trading System History </p>
+		<p> Before update a position </p>
 		<h4>User ID: ${id_session} </h4>
 		<p><h4>User Name: ${user_session}</h4></p>
 		<p>Ticker: ${ticker_session}</p>
-		<p>Total Quantity: ${quantity_session}</p>
+		<p>Total Quantity of Stock: ${quantity_session}</p>
 		<p>Total Available Fund: ${Avalablefund_session}</p>
 		<p>Price: ${executeprice_session}</p>
-		<p>Date: ${executedate_session}</p>
+		
+		<br>
+		<p> After update a position </p>
+		<h4>User ID: ${id_session} </h4>
+		<p><h4>User Name: ${user_session}</h4></p>
+		<p>Ticker: ${ticker_session}</p>
+		<p>Total Quantity of Stock: ${quant_session}</p>
+		<p>Total Available Fund: ${fund_session}</p>
+		
 		
 </body>
 </html>

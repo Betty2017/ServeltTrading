@@ -14,20 +14,37 @@
 </head>
 <body>
 <form action ="TradingController" method = "post" > 
-	
+	<br>
 	<div class="form-group">
 		<label>Enter User Id </label> 
 			<input type = "text" name="id" id="id"> 
 	</div>
-	 <!-- <div class="form-group">
+	
+	<div class="form-group">
+		<label>Type of Action</label> 
+			<select name="action">
+			    <option value="buy">Buy</option>
+			    <option value="sell">Sell</option>
+			    <option value="sellShort">Sell Short</option>
+			    <option value="buyTocover">Buy To Cover</option>
+			 </select>
+	</div> 
+	<div class="form-group">
+		<label>Quantity of Share to buy </label> 
+			<input type = "number" name="amountquantity" id="amountquantity"> 
+	</div>
+	<div class="form-group">
+		<label>Symbol </label> 
+			<input type = "text" name="symbol" id="symbol"> 
+	</div>
+	 <div class="form-group">
 		<label>Type of Trade</label> 
 			<select name="trade">
 			    <option value="market">Market Trade</option>
 			    <option value="nonMarket">Non Market Trade</option>
 			 </select>
-	</div> -->
-	<input type="submit" name="market" value="Market Trade">
-	<input type="submit" name="nonMarket" value="Non Marker Trade">
+	</div> 
+	
 	<!-- <div class="form-group">
 		<label>Amount of Stock you want to buy</label> 
 			<input type = "number" name="personId" id="personId"> 
